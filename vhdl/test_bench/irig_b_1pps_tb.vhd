@@ -8,45 +8,59 @@ entity irig_b_1pps_tb is
 end entity irig_b_1pps_tb;
 
 architecture RTL of irig_b_1pps_tb is
-	signal s_1pps_clk : std_logic := '1';
-	signal s_irig_clk : std_logic := '1';
-	signal s_rst : std_logic := '1';
+	signal s_1pps_clk     : std_logic := '1';
+	signal s_irig_clk     : std_logic := '1';
+	signal s_rst          : std_logic := '1';
 	signal s_irig_data_in : std_logic;
-	signal s_one_pps : std_logic;
+	signal s_one_pps      : std_logic;
+	signal s_data_in      : std_logic;
+	signal s_time_start   : integer;
+	signal s_ref_falg     : std_logic;
 begin
 
-s_rst <= '0' after 110 ns;
+	s_rst <= '0' after 110 ns;
 
 	rx_clk_gen_proc : process
+		variable v_first_time : boolean := true;
 	begin
-		wait for c_phase_rx_clk;
+		if(v_first_time)then
+			wait for c_phase_rx_clk;
+			v_first_time := false;
+		end if;
+		
 		wait for c_rx_clk_half_period;
 		s_1pps_clk <= not s_1pps_clk;
 
 	end process rx_clk_gen_proc;
-	
+
 	irig_clk_gen_proc : process
+		variable v_first_time : boolean := true;
 	begin
-		wait for c_phase_irig_clk;
+		if(v_first_time)then
+			wait for c_phase_irig_clk;
+			v_first_time := false;
+		end if;
+
 		wait for c_irig_b_clk_half_period;
 		s_irig_clk <= not s_irig_clk;
 
 	end process irig_clk_gen_proc;
-	
-	u_one_pps : entity work.irig_sync
+
+	u_phase_lock : entity work.irig_sync
 		port map(
-			CLK     => s_1pps_clk,
-			RST     => s_rst,
-			DATA_IN => s_irig_data_in,
-			ONE_PPS => 
-			s_one_pps
+			CLK                 => s_1pps_clk,
+			RST                 => s_rst,
+			DATA_IN             => s_irig_data_in,
+			SYNCED_DATA         => s_data_in,
+			TIME_SINCE_LAST_REF => s_time_start,
+			REF_FLAG            => s_ref_falg
 		);
-	
+
 	u_file_reader : entity work.msg_reader
 		port map(
-			CLK   => s_irig_clk,
-			RST   => s_rst,
-			DATA  => s_irig_data_in
-			);
+			CLK  => s_irig_clk,
+			RST  => s_rst,
+			DATA => s_irig_data_in
+		);
 
 end architecture RTL;
