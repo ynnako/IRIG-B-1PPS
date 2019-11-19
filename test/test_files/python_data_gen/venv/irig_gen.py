@@ -3,8 +3,16 @@ import time
 dst_file = "irig_msg.txt"
 f= open(dst_file,"w+")
 f.close()
-for k in range(0, 1000):
-    t = datetime.datetime.now()
+tot_num_of_msg = 20
+skip_idx_frame = range(2 , 8)
+reference_idx_list = [0, 9, 19, 29, 39, 49, 59, 69, 79, 89, 99]
+t = datetime.datetime.now()
+d_time = datetime.timedelta(seconds = 1)
+high = "1111100000"
+low = "1100000000"
+reference = "1111111100"
+test_fsm = False
+for k in range(0, tot_num_of_msg):
     sec = t.second
     minute = t.minute
     hour = t.hour
@@ -54,13 +62,11 @@ for k in range(0, 1000):
     frames.append(frames[6])
     frames.append(frames[6])
     frames.append(frames[6])
-
-    reference_idx_list = [0, 9, 19, 29, 39, 49, 59, 69, 79, 89, 99]
-    high = "1111100000"
-    low = "1100000000"
-    reference = "1111111100"
     msg = ""
-    for i in range(0, 10):
+    for i in range(0, frames.__len__()):
+
+        if (test_fsm & skip_idx_frame.__contains__(i)):
+            continue
         for j in range(0, frames[i].__len__()):
             if (reference_idx_list.__contains__((i * 10) + j)):
                 msg = msg + reference
@@ -68,10 +74,10 @@ for k in range(0, 1000):
                 msg = msg + high
             elif (frames[i][j] == "0"):
                 msg = msg + low
-    print(frames)
+        msg = msg + "\n"
 
     f = open(dst_file , "a+")
-    f.write(msg + "\n")
+    f.write(msg)
     f.close()
-    time.sleep(1)
+    t = t + d_time
 
