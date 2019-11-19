@@ -1,6 +1,6 @@
 import datetime
 import time
-dst_file = "irig_msg.txt"
+dst_file = "..\..\..\\test_files\in_files\irig_msg.txt"
 f= open(dst_file,"w+")
 f.close()
 tot_num_of_msg = 20
