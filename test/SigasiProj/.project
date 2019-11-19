@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>IRIG-B</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.xtext.ui.shared.xtextBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.sigasi.hdt.vhdl.ui.vhdlNature</nature>
+		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Common Libraries</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Global</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Packs</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>TestBench</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Common Libraries/DRAG_REUSABLE_LIBRARIES_HERE.txt</name>
+			<type>1</type>
+			<locationURI>sigasiresource:/vhdl/readme.txt</locationURI>
+		</link>
+		<link>
+			<name>Common Libraries/IEEE</name>
+			<type>2</type>
+			<locationURI>sigasiresource:/vhdl/2008/IEEE</locationURI>
+		</link>
+		<link>
+			<name>Common Libraries/IEEE Synopsys</name>
+			<type>2</type>
+			<locationURI>sigasiresource:/vhdl/2008/IEEE%20Synopsys</locationURI>
+		</link>
+		<link>
+			<name>Common Libraries/STD</name>
+			<type>2</type>
+			<locationURI>sigasiresource:/vhdl/2008/STD</locationURI>
+		</link>
+		<link>
+			<name>Global/irig_sync.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/irig_sync.vhd</locationURI>
+		</link>
+		<link>
+			<name>Packs/irig_b_1pps_tb_pack.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/test_bench/irig_b_1pps_tb_pack.vhd</locationURI>
+		</link>
+		<link>
+			<name>TB/irig_b_1pps_tb.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/test_bench/irig_b_1pps_tb.vhd</locationURI>
+		</link>
+		<link>
+			<name>TB/msg_reader.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/test_bench/msg_reader.vhd</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>DESIGN_LOC</name>
+			<value>file:/C:/Users/Yonatan/Documents/Technion/IRIG-B-1PPS/vhdl</value>
+		</variable>
+	</variableList>
+</projectDescription>
