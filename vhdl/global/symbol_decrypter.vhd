@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-use work.symbol_decrypter_pack.all;
+use work.irig_b_pack.all;
 entity symbol_decrypter is
 
 	port(
