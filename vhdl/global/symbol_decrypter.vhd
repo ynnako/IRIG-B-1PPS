@@ -26,6 +26,7 @@ architecture RTL of symbol_decrypter is
 	signal data_out_one_pulse_reg  : std_logic;
 	signal data_out_ref_pulse_reg  : std_logic;
 	signal start_count             : std_logic;
+	signal data_in_reg : std_logic;
 
 begin
 	data_in_sig         <= DATA_IN;
@@ -41,9 +42,11 @@ begin
 			data_out_zero_pulse_reg <= '0';
 			data_out_one_pulse_reg  <= '0';
 			data_out_ref_pulse_reg  <= '0';
+			data_in_reg  <= '0';
 		elsif rising_edge(CLK) then
+			data_in_reg  <= data_in_sig;
 			-- detect rising edge in data
-			if rising_edge(data_in_sig) then 
+			if (data_in_sig ='1' and data_in_reg = '0') then 
 				start_count <= '1';
 			-- data is high anf in process of counting
 			elsif (start_count = '1' and data_in_sig = '1') then 
