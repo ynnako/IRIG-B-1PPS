@@ -16,9 +16,6 @@ entity detect_pulse is
 end entity detect_pulse;
 
 architecture RTL of detect_pulse is
-	-------------
-	-- Constant
-	-------------
 
 	-------------
 	-- Signals
@@ -51,21 +48,25 @@ begin
 
 			elsif (start_count = '1' and data_in_sig = '1') then -- data is high anf in process of counting
 				counter_detect_pulse <= counter_detect_pulse + 1;
-			else
+			else -- data is low
 				start_count          <= '0';
 				counter_detect_pulse <= 0;
+				--  detect '0'
 				if ((counter_detect_pulse < c_zero_pulse_err_high_lim) and (counter_detect_pulse > c_zero_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '1';
 					data_out_one_pulse_reg  <= '0';
 					data_out_ref_pulse_reg  <= '0';
+				--  detect '1'
 				elsif ((counter_detect_pulse < c_one_pulse_err_high_lim) and (counter_detect_pulse > c_one_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '0';
 					data_out_one_pulse_reg  <= '1';
 					data_out_ref_pulse_reg  <= '0';
+				--  detect ref	
 				elsif ((counter_detect_pulse < c_ref_pulse_err_high_lim) and (counter_detect_pulse > c_ref_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '0';
 					data_out_one_pulse_reg  <= '0';
 					data_out_ref_pulse_reg  <= '1';
+				-- steady state(data low and the result already updated)	
 				else
 					data_out_zero_pulse_reg <= '0';
 					data_out_one_pulse_reg  <= '0';
