@@ -26,7 +26,7 @@ architecture RTL of pps_gen is
 
 	signal s_pps           : std_logic;
 	signal s_prev_data     : std_logic;
-	signal s_ref_counter   : integer range 0 to c_num_refs_in_time_frame;
+	signal s_ref_counter   : integer range -1 to c_num_refs_in_time_frame;
 	signal s_sync_time_out : integer;
 begin
 
@@ -77,7 +77,7 @@ begin
 					if (s_ref_counter = c_num_refs_in_time_frame) then
 						if (s_prev_data = '0' and SYNCED_DATA = '1') then
 							s_pps         <= '1';
-							s_ref_counter <= 0;
+							s_ref_counter <= -1;
 						end if;
 					end if;
 			end case;
