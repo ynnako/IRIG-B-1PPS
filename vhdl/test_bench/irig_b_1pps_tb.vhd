@@ -16,6 +16,10 @@ architecture RTL of irig_b_1pps_tb is
 	signal s_data_in      : std_logic;
 	signal s_time_start   : integer;
 	signal s_ref_falg     : std_logic;
+	signal s_time_synced : std_logic;
+	signal s_zero_pulse : std_logic;
+	signal s_one_pulse : std_logic;
+	signal s_ref_pulse : std_logic;
 begin
 
 	s_rst <= '0' after 110 ns;
@@ -45,16 +49,37 @@ begin
 		s_irig_clk <= not s_irig_clk;
 
 	end process irig_clk_gen_proc;
+	
+	u_sync_data : entity work.sync 
+	port map(
+		CLK  => s_1pps_clk,
+		RESET  => s_rst,
+		DATA_IN  => s_irig_data_in,
+		DATA_OUT  => s_data_in
+	);
+	
+	
+	u_symbol_descrypter : entity work.symbol_decrypter
+		port map(
+			CLK                 => s_1pps_clk,
+			RESET               => s_rst,
+			DATA_IN             => s_data_in,
+			DATA_OUT_ZERO_PULSE => s_zero_pulse,
+			DATA_OUT_ONE_PULSE  => s_one_pulse,
+			DATA_OUT_REF_PULSE  => s_ref_pulse
+		);
 
 	u_phase_lock : entity work.pps_gen
 		port map(
 			CLK                 => s_1pps_clk,
 			RST                 => s_rst,
-			DATA_IN             => s_irig_data_in,
 			SYNCED_DATA         => s_data_in,
-			TIME_SINCE_LAST_REF => s_time_start,
-			REF_FLAG            => s_ref_falg
+			REF_FLAG            => s_ref_falg,
+			TIME_SYNCED 		=> s_time_synced,
+			PPS					=> s_one_pps
 		);
+
+		
 
 	u_file_reader : entity work.msg_reader
 		port map(
