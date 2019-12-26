@@ -25,6 +25,7 @@ architecture RTL of pps_gen is
 	signal s_time_synced        : std_logic;
 
 	signal s_pps           : std_logic;
+	signal s_prev_data     : std_logic;
 	signal s_ref_counter   : integer range 0 to c_num_refs_in_time_frame;
 	signal s_sync_time_out : integer;
 begin
@@ -44,6 +45,7 @@ begin
 			s_sync_time_out      <= 0;
 		elsif (rising_edge(CLK)) then
 			s_pps <= '0';
+			s_prev_data <= SYNCED_DATA;
 			case s_pps_gen_state is
 				when sync_to_time_st =>
 					if (not s_first_ref) then
@@ -60,7 +62,7 @@ begin
 						s_ref_to_ref_counter <= 0;
 					end if;
 
-				when pps_gen_st =>      -- @suppress "Dead state "pps_gen_st": state does not have outgoing transitions"
+				when pps_gen_st =>      
 					s_sync_time_out <= s_sync_time_out + 1;
 					if (s_sync_time_out >= (2 * c_half_frame_size) + 100) then
 						s_first_ref     <= true;
@@ -73,7 +75,7 @@ begin
 						s_ref_counter   <= s_ref_counter + 1;
 					end if;
 					if (s_ref_counter = c_num_refs_in_time_frame) then
-						if (rising_edge(SYNCED_DATA)) then
+						if (s_prev_data = '0' and SYNCED_DATA = '1') then
 							s_pps         <= '1';
 							s_ref_counter <= 0;
 						end if;
