@@ -46,7 +46,7 @@ begin
 
 	end process irig_clk_gen_proc;
 
-	u_phase_lock : entity work.irig_sync
+	u_phase_lock : entity work.pps_gen
 		port map(
 			CLK                 => s_1pps_clk,
 			RST                 => s_rst,
