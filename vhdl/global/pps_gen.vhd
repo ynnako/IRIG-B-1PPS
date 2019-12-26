@@ -56,7 +56,7 @@ begin
 							s_first_ref <= false;
 						elsif (s_ref_to_ref_counter < c_half_frame_size) then
 							s_pps_gen_state <= pps_gen_st;
-							s_ref_counter   <= 1;
+							s_ref_counter   <= 0;
 							s_time_synced   <= '1';
 						end if;
 						s_ref_to_ref_counter <= 0;

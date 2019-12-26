@@ -6,7 +6,7 @@ package irig_b_pack is
 	constant c_init                    : std_logic                    := '1';
 	constant c_norm                    : std_logic                    := '0';
 	constant c_data_rate               : integer                      := 1; -- unit of KHz
-	constant c_clk_rate                : integer                      := 200000; -- unit of KHz
+	constant c_clk_rate                : integer                      := 200; -- unit of KHz
 	constant c_ratio_between_clk       : integer                      := c_clk_rate / c_data_rate;
 	constant c_precentage			   : integer					  := 20; -- 1/(%/100)
 	constant c_error_lim               : integer                      := c_ratio_between_clk / c_precentage;
