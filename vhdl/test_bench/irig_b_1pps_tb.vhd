@@ -74,7 +74,7 @@ begin
 			CLK                 => s_1pps_clk,
 			RST                 => s_rst,
 			SYNCED_DATA         => s_data_in,
-			REF_FLAG            => s_ref_falg,
+			REF_FLAG            => s_ref_pulse,
 			TIME_SYNCED 		=> s_time_synced,
 			PPS					=> s_one_pps
 		);
