@@ -42,13 +42,14 @@ begin
 			data_out_one_pulse_reg  <= '0';
 			data_out_ref_pulse_reg  <= '0';
 		elsif rising_edge(CLK) then
-
-			if rising_edge(data_in_sig) then -- detect rising edge in data
+			-- detect rising edge in data
+			if rising_edge(data_in_sig) then 
 				start_count <= '1';
-
-			elsif (start_count = '1' and data_in_sig = '1') then -- data is high anf in process of counting
+			-- data is high anf in process of counting
+			elsif (start_count = '1' and data_in_sig = '1') then 
 				counter_detect_pulse <= counter_detect_pulse + 1;
-			else -- data is low
+			-- data is low	
+			else 
 				start_count          <= '0';
 				counter_detect_pulse <= 0;
 				--  detect '0'
