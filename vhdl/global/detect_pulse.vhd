@@ -2,6 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+use work.detect_pulse_pack.all;
 entity detect_pulse is
 	generic(
 		G_DATA_RATE : integer := 100    -- HZ unit
@@ -18,13 +19,6 @@ architecture RTL of detect_pulse is
 	-------------
 	-- Constant
 	-------------
-	constant c_zero_pulse_length : integer := 2;
-	constant c_one_pulse_length  : integer := 5;
-	constant c_ref_pulse_length  : integer := 8;
-
-	constant c_zero_pulse_data : std_logic_vector(2 downto 0) := "100";
-	constant c_one_pulse_data  : std_logic_vector(2 downto 0) := "010";
-	constant c_ref_pulse_data  : std_logic_vector(2 downto 0) := "001";
 
 	-------------
 	-- Signals
@@ -45,6 +39,7 @@ begin
 			start_count          <= '0';
 			counter_detect_pulse <= 0;
 		elsif rising_edge(CLK) then
+			
 			if rising_edge(data_in_sig) then -- detect rising edge in data
 				start_count <= '1';
 				
@@ -52,12 +47,12 @@ begin
 				counter_detect_pulse <= counter_detect_pulse + 1;
 			else
 				start_count          <= '0';
-				counter_detect_pulse <= 0;
-				if (counter_detect_pulse = c_zero_pulse_length-1) then
+				counter_detect_pulse <=  0 ;
+				if ((counter_detect_pulse < c_zero_pulse_err_high_lim )and (counter_detect_pulse > c_zero_pulse_err_low_lim )) then
 					data_out_reg <= c_zero_pulse_data;
-				elsif (counter_detect_pulse = c_one_pulse_length-1) then
+				elsif ((counter_detect_pulse < c_one_pulse_err_high_lim )and (counter_detect_pulse > c_one_pulse_err_low_lim )) then
 					data_out_reg <= c_one_pulse_data;
-				elsif (counter_detect_pulse = c_ref_pulse_length-1) then
+				elsif ((counter_detect_pulse < c_ref_pulse_err_high_lim )and (counter_detect_pulse > c_ref_pulse_err_low_lim )) then 
 					data_out_reg <= c_ref_pulse_data;
 				else
 					data_out_reg <= (others => '0');
