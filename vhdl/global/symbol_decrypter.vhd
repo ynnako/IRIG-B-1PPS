@@ -2,8 +2,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-use work.detect_pulse_pack.all;
-entity detect_pulse is
+use work.symbol_decrypter_pack.all;
+entity symbol_decrypter is
 
 	port(
 		CLK                 : in  std_logic; --  clk
@@ -13,14 +13,14 @@ entity detect_pulse is
 		DATA_OUT_ONE_PULSE  : out std_logic;
 		DATA_OUT_REF_PULSE  : out std_logic
 	);
-end entity detect_pulse;
+end entity symbol_decrypter;
 
-architecture RTL of detect_pulse is
+architecture RTL of symbol_decrypter is
 
 	-------------
 	-- Signals
 	-------------
-	signal counter_detect_pulse    : integer range 0 to c_max_count_val - 1;
+	signal counter_symbol_decrypter    : integer range 0 to c_max_count_val - 1;
 	signal data_in_sig             : std_logic;
 	signal data_out_zero_pulse_reg : std_logic;
 	signal data_out_one_pulse_reg  : std_logic;
@@ -37,7 +37,7 @@ begin
 	begin
 		if RESET = c_init then
 			start_count             <= '0';
-			counter_detect_pulse    <= 0;
+			counter_symbol_decrypter    <= 0;
 			data_out_zero_pulse_reg <= '0';
 			data_out_one_pulse_reg  <= '0';
 			data_out_ref_pulse_reg  <= '0';
@@ -47,23 +47,23 @@ begin
 				start_count <= '1';
 			-- data is high anf in process of counting
 			elsif (start_count = '1' and data_in_sig = '1') then 
-				counter_detect_pulse <= counter_detect_pulse + 1;
+				counter_symbol_decrypter <= counter_symbol_decrypter + 1;
 			-- data is low	
 			else 
 				start_count          <= '0';
-				counter_detect_pulse <= 0;
+				counter_symbol_decrypter <= 0;
 				--  detect '0'
-				if ((counter_detect_pulse < c_zero_pulse_err_high_lim) and (counter_detect_pulse > c_zero_pulse_err_low_lim)) then
+				if ((counter_symbol_decrypter < c_zero_pulse_err_high_lim) and (counter_symbol_decrypter > c_zero_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '1';
 					data_out_one_pulse_reg  <= '0';
 					data_out_ref_pulse_reg  <= '0';
 				--  detect '1'
-				elsif ((counter_detect_pulse < c_one_pulse_err_high_lim) and (counter_detect_pulse > c_one_pulse_err_low_lim)) then
+				elsif ((counter_symbol_decrypter < c_one_pulse_err_high_lim) and (counter_symbol_decrypter > c_one_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '0';
 					data_out_one_pulse_reg  <= '1';
 					data_out_ref_pulse_reg  <= '0';
 				--  detect ref	
-				elsif ((counter_detect_pulse < c_ref_pulse_err_high_lim) and (counter_detect_pulse > c_ref_pulse_err_low_lim)) then
+				elsif ((counter_symbol_decrypter < c_ref_pulse_err_high_lim) and (counter_symbol_decrypter > c_ref_pulse_err_low_lim)) then
 					data_out_zero_pulse_reg <= '0';
 					data_out_one_pulse_reg  <= '0';
 					data_out_ref_pulse_reg  <= '1';
