@@ -30,6 +30,10 @@ package irig_b_pack is
 	constant c_zero_pulse_data         : std_logic_vector(2 downto 0) := "100";
 	constant c_one_pulse_data          : std_logic_vector(2 downto 0) := "010";
 	constant c_ref_pulse_data          : std_logic_vector(2 downto 0) := "001";
+	
+	constant c_ascii_conv_data_width   : integer					  := 8;
+	constant c_zero_ascii_val		   : integer					  := 48;
+	constant c_error_ascii_val		   : integer					  := 69;
 
 	
 end package irig_b_pack;
