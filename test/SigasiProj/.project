@@ -57,20 +57,36 @@
 			<locationURI>sigasiresource:/vhdl/2008/STD</locationURI>
 		</link>
 		<link>
-			<name>Global/irig_sync.vhd</name>
+			<name>Global/pps_gen.vhd</name>
 			<type>1</type>
-			<locationURI>DESIGN_LOC/global/irig_sync.vhd</locationURI>
+			<locationURI>DESIGN_LOC/global/pps_gen.vhd</locationURI>
 		</link>
 		<link>
-			<name>Packs/irig_b_pack.vhd</name>
+			<name>Global/sync.vhd</name>
 			<type>1</type>
-			<locationURI>DESIGN_LOC/pack/irig_b_pack.vhd</locationURI>
+			<locationURI>DESIGN_LOC/global/sync.vhd</locationURI>
+		</link>
+		<link>
+			<name>Global/symbol_decrypter.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/symbol_decrypter.vhd</locationURI>
+		</link>
+		<link>
+			<name>Global/ascii_converter.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/ascii_converter.vhd</locationURI>
 		</link>
 		<link>
 			<name>Packs/irig_b_1pps_tb_pack.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/test_bench/irig_b_1pps_tb_pack.vhd</locationURI>
 		</link>
+		<link>
+			<name>Packs/irig_b_pack.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/pack/irig_b_pack.vhd</locationURI>
+		</link>
+
 		<link>
 			<name>TB/irig_b_1pps_tb.vhd</name>
 			<type>1</type>
@@ -85,7 +101,7 @@
 	<variableList>
 		<variable>
 			<name>DESIGN_LOC</name>
-			<value>file:/C:/Users/Yonatan/Documents/Technion/IRIG-B-1PPS/vhdl</value>
+			<value>file:/home/yonatan/Technion/irig_b/vhdl</value>
 		</variable>
 	</variableList>
 </projectDescription>
