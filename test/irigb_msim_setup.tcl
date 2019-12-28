@@ -57,6 +57,7 @@ alias com {
 alias elab {
   echo "\[exec\] elab"
   eval vsim -t ps $ELAB_OPTIONS -L work  $TOP_LEVEL_NAME
+	do do_files/irig_b_wave.do
 }
 
 # ----------------------------------------
