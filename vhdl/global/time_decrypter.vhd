@@ -1,0 +1,209 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.std_logic_arith.all;
+
+use work.irig_b_pack.all;
+
+entity time_decrypter is
+	port(
+		CLK                : in  std_logic;
+		RESET              : in  std_logic;
+		DATA_IN_ZERO_PULSE : in  std_logic;
+		DATA_IN_ONE_PULSE  : in  std_logic;
+		DATA_IN_REF_PULSE  : in  std_logic;
+		TIME_SYNCED        : in  std_logic;
+		PPS                : in  std_logic;
+		SEC_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		SEC_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		MIN_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		MIN_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		HOUR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		HOUR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		DAY_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		DAy_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		DAY_100_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		YEAR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		YEAR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0)
+	);
+end entity time_decrypter;
+
+architecture RTL of time_decrypter is
+	--------------
+	-- Signals
+	--------------
+	signal data_in_zero_pulse_sig : std_logic;
+	signal data_in_one_pulse_sig  : std_logic;
+	signal data_in_ref_pulse_sig  : std_logic;
+	signal time_synced_sig        : std_logic;
+	signal pps_sig                : std_logic;
+	signal sec_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal sec_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal min_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal min_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal hour_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal hour_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_100_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal year_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal year_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+
+	signal symbol_data_reg        : std_logic_vector(c_num_data_symbol_per_sec - 1 downto 0)                              := (others => '0');
+	signal data_to_convert_reg    : slv_array_type(0 to c_num_of_digit_to_disp - 1)(c_ascii_conv_data_width - 1 downto 0) := (others => (others => '0'));
+	signal counter_ref_pulse_sig  : integer range -1 to c_num_refs_in_time_frame;
+	signal counter_data_pulse_sig : integer range -1 to c_num_data_symbol_per_sec;
+	signal update_time_sig        : std_logic;
+
+begin
+
+	data_in_zero_pulse_sig <= DATA_IN_ZERO_PULSE;
+	data_in_one_pulse_sig  <= DATA_IN_ONE_PULSE;
+	data_in_ref_pulse_sig  <= DATA_IN_REF_PULSE;
+	time_synced_sig        <= TIME_SYNCED;
+	pps_sig                <= PPS;
+	SEC_1_DATA_ASCII       <= sec_1_data_ascii_sig;
+	SEC_10_DATA_ASCII      <= sec_10_data_ascii_sig;
+	MIN_1_DATA_ASCII       <= min_1_data_ascii_sig;
+	MIN_10_DATA_ASCII      <= min_10_data_ascii_sig;
+	HOUR_1_DATA_ASCII      <= hour_1_data_ascii_sig;
+	HOUR_10_DATA_ASCII     <= hour_10_data_ascii_sig;
+	DAY_1_DATA_ASCII       <= day_1_data_ascii_sig;
+	DAy_10_DATA_ASCII      <= day_10_data_ascii_sig;
+	DAY_100_DATA_ASCII     <= day_100_data_ascii_sig;
+	YEAR_1_DATA_ASCII      <= year_1_data_ascii_sig;
+	YEAR_10_DATA_ASCII     <= year_10_data_ascii_sig;
+	
+	
+	
+
+	process(CLK, RESET)
+	begin
+		if (RESET = c_init) then
+			counter_ref_pulse_sig  <= 0;
+			counter_data_pulse_sig <= 0;
+			update_time_sig        <= '0';
+
+		elsif rising_edge(CLK) then
+			if (time_synced_sig = '1') then
+				if (data_in_zero_pulse_sig = '1') then
+					symbol_data_reg(counter_data_pulse_sig) <= '0';
+					counter_data_pulse_sig                  <= counter_data_pulse_sig + 1;
+				elsif (data_in_one_pulse_sig = '1') then
+					symbol_data_reg(counter_data_pulse_sig) <= '1';
+					counter_data_pulse_sig                  <= counter_data_pulse_sig + 1;
+				elsif (data_in_ref_pulse_sig = '1') then
+					counter_ref_pulse_sig  <= counter_ref_pulse_sig + 1;
+					counter_data_pulse_sig <= counter_data_pulse_sig + 1;
+				end if;
+				if (counter_ref_pulse_sig = c_num_refs_in_time_frame) then
+					counter_ref_pulse_sig  <= -1;
+					counter_data_pulse_sig <= -1; 
+				end if;
+
+				if (pps_sig = '1') then
+					update_time_sig <= '1';
+				end if;
+
+				if (update_time_sig = '1') then
+					update_time_sig                                   <= '0';
+					data_to_convert_reg(c_counted_unit_sec_index)     <= ext(symbol_data_reg(c_end_1_sec_index downto c_start_1_sec_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_digit_of_dozens_sec_index)  <= ext(symbol_data_reg(c_end_10_sec_index downto c_start_10_sec_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_counted_unit_min_index)     <= ext(symbol_data_reg(c_end_1_min_index downto c_start_1_min_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_digit_of_dozens_min_index)  <= ext(symbol_data_reg(c_end_10_min_index downto c_start_10_min_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_counted_unit_hour_index)    <= ext(symbol_data_reg(c_end_1_hour_index downto c_start_1_hour_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_digit_of_dozens_hour_index) <= ext(symbol_data_reg(c_end_10_hour_index downto c_start_10_hour_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_counted_unit_day_index)     <= ext(symbol_data_reg(c_end_1_day_index downto c_start_1_day_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_digit_of_dozens_day_index)  <= ext(symbol_data_reg(c_end_10_day_index downto c_start_10_day_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_counted_hundreds_day_index) <= ext(symbol_data_reg(c_end_100_day_index downto c_start_100_day_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_counted_unit_year_index)    <= ext(symbol_data_reg(c_end_1_year_index downto c_start_1_year_index), c_ascii_conv_data_width);
+					data_to_convert_reg(c_digit_of_dozens_year_index) <= ext(symbol_data_reg(c_end_10_year_index downto c_start_10_year_index), c_ascii_conv_data_width);
+
+				end if;
+			else
+				update_time_sig <= '0';
+				--TODO: need to add more signals
+			end if;
+		end if;
+	end process;
+
+	-----------------------------------------------------------------------------
+	--------------------------------Seconds--------------------------------------
+	-----------------------------------------------------------------------------
+	u_convert_counted_unit_of_sec : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_unit_sec_index),
+			ASCII_VALUE_OUT => sec_1_data_ascii_sig
+		);
+
+	u_convert_digit_of_dozens_sec : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_sec_index),
+			ASCII_VALUE_OUT => sec_10_data_ascii_sig
+		);
+	-----------------------------------------------------------------------------
+	--------------------------------Minutes--------------------------------------
+	-----------------------------------------------------------------------------		
+	u_convert_counted_unit_of_min : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_unit_min_index),
+			ASCII_VALUE_OUT => min_1_data_ascii_sig
+		);
+
+	u_convert_digit_of_dozens_min : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_min_index),
+			ASCII_VALUE_OUT => min_10_data_ascii_sig
+		);
+	-----------------------------------------------------------------------------
+	----------------------------------Hours--------------------------------------
+	-----------------------------------------------------------------------------		
+	u_convert_counted_unit_of_hour : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_unit_hour_index),
+			ASCII_VALUE_OUT => hour_1_data_ascii_sig
+		);
+
+	u_convert_digit_of_dozens_hour : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			ASCII_VALUE_OUT => hour_10_data_ascii_sig
+		);
+	-----------------------------------------------------------------------------
+	-----------------------------------Days--------------------------------------
+	-----------------------------------------------------------------------------		
+
+	u_convert_counted_unit_of_day : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_unit_day_index),
+			ASCII_VALUE_OUT => day_1_data_ascii_sig
+		);
+
+	u_convert_digit_of_dozens_day : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_day_index),
+			ASCII_VALUE_OUT => day_10_data_ascii_sig
+		);
+
+	u_convert_counted_hundrens_of_day : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_hundreds_day_index),
+			ASCII_VALUE_OUT => day_100_data_ascii_sig
+		);
+	-----------------------------------------------------------------------------
+	------------------------------------Years------------------------------------
+	-----------------------------------------------------------------------------		
+
+	u_convert_counted_unit_of_year : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_counted_unit_year_index),
+			ASCII_VALUE_OUT => year_1_data_ascii_sig
+		);
+
+	u_convert_digit_of_dozens_year : entity work.ascii_converter
+		port map(
+			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_year_index),
+			ASCII_VALUE_OUT => year_10_data_ascii_sig
+		);
+
+end architecture RTL;

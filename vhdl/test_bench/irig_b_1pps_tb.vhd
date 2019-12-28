@@ -3,6 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 use work.irig_b_1pps_tb_pack.all;
+use work.irig_b_pack.all;
 
 entity irig_b_1pps_tb is
 end entity irig_b_1pps_tb;
@@ -20,6 +21,17 @@ architecture RTL of irig_b_1pps_tb is
 	signal s_zero_pulse : std_logic;
 	signal s_one_pulse : std_logic;
 	signal s_ref_pulse : std_logic;
+	signal sec_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal sec_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal min_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal min_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal hour_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal hour_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal day_100_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal year_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal year_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 begin
 
 	s_rst <= '0' after 110 ns;
@@ -49,7 +61,37 @@ begin
 		s_irig_clk <= not s_irig_clk;
 
 	end process irig_clk_gen_proc;
-	
+
+		
+
+	u_file_reader : entity work.msg_reader
+		port map(
+			CLK  => s_irig_clk,
+			RST  => s_rst,
+			DATA => s_irig_data_in
+		);
+		
+	u_irig_b_top : entity work.irig_b_top
+		port map(
+			MODULE_CLK         => s_1pps_clk,
+			RESET              => s_rst,
+			IRIG_B_DATA_IN     => s_irig_data_in,
+			PPS                => s_one_pps,
+			SEC_1_DATA_ASCII   => sec_1_data_ascii_sig,
+			SEC_10_DATA_ASCII  => sec_10_data_ascii_sig,
+			MIN_1_DATA_ASCII   => min_1_data_ascii_sig,
+			MIN_10_DATA_ASCII  => min_10_data_ascii_sig,
+			HOUR_1_DATA_ASCII  => hour_1_data_ascii_sig,
+			HOUR_10_DATA_ASCII => hour_10_data_ascii_sig,
+			DAY_1_DATA_ASCII   => day_1_data_ascii_sig,
+			DAy_10_DATA_ASCII  => day_10_data_ascii_sig,
+			DAY_100_DATA_ASCII => day_100_data_ascii_sig,
+			YEAR_1_DATA_ASCII  => year_1_data_ascii_sig,
+			YEAR_10_DATA_ASCII => year_10_data_ascii_sig
+		);	
+		
+		
+/* 
 	u_sync_data : entity work.sync 
 	port map(
 		CLK  => s_1pps_clk,
@@ -78,14 +120,6 @@ begin
 			TIME_SYNCED 		=> s_time_synced,
 			PPS					=> s_one_pps
 		);
-
-		
-
-	u_file_reader : entity work.msg_reader
-		port map(
-			CLK  => s_irig_clk,
-			RST  => s_rst,
-			DATA => s_irig_data_in
-		);
+*/		
 
 end architecture RTL;
