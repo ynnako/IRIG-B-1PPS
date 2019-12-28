@@ -90,36 +90,5 @@ begin
 			YEAR_10_DATA_ASCII => year_10_data_ascii_sig
 		);	
 		
-		
-/* 
-	u_sync_data : entity work.sync 
-	port map(
-		CLK  => s_1pps_clk,
-		RESET  => s_rst,
-		DATA_IN  => s_irig_data_in,
-		DATA_OUT  => s_data_in
-	);
-	
-	
-	u_symbol_descrypter : entity work.symbol_decrypter
-		port map(
-			CLK                 => s_1pps_clk,
-			RESET               => s_rst,
-			DATA_IN             => s_data_in,
-			DATA_OUT_ZERO_PULSE => s_zero_pulse,
-			DATA_OUT_ONE_PULSE  => s_one_pulse,
-			DATA_OUT_REF_PULSE  => s_ref_pulse
-		);
-
-	u_phase_lock : entity work.pps_gen
-		port map(
-			CLK                 => s_1pps_clk,
-			RST                 => s_rst,
-			SYNCED_DATA         => s_data_in,
-			REF_FLAG            => s_ref_pulse,
-			TIME_SYNCED 		=> s_time_synced,
-			PPS					=> s_one_pps
-		);
-*/		
 
 end architecture RTL;
