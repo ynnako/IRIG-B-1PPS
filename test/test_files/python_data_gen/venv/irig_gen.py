@@ -1,8 +1,11 @@
 import datetime
 import time
 dst_file = "../../in_files/irig_msg.txt"
+ref_file = "../../out_files/time_reference.txt"
 f= open(dst_file,"w+")
 f.close()
+fr= open(ref_file,"w+")
+fr.close()
 tot_num_of_msg = 20
 skip_idx_frame = range(2 , 8)
 reference_idx_list = [0, 9, 19, 29, 39, 49, 59, 69, 79, 89, 99]
@@ -75,9 +78,12 @@ for k in range(0, tot_num_of_msg):
             elif (frames[i][j] == "0"):
                 msg = msg + low
         msg = msg + "\n"
-
+    time_str = t.strftime("%d.%m.%Y\t%H:%M:%S")
     f = open(dst_file , "a+")
     f.write(msg)
     f.close()
+    fr = open(ref_file , "a+")
+    fr.write(time_str + "\n")
+    fr.close()
     t = t + d_time
 
