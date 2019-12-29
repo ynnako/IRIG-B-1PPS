@@ -57,6 +57,16 @@
 			<locationURI>sigasiresource:/vhdl/2008/STD</locationURI>
 		</link>
 		<link>
+			<name>Global/irig_b_top.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/irig_b_top.vhd</locationURI>
+		</link>
+		<link>
+			<name>Global/time_decrypter.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/time_decrypter.vhd</locationURI>
+		</link>
+		<link>
 			<name>Global/pps_gen.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/global/pps_gen.vhd</locationURI>
