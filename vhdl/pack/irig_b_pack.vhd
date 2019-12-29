@@ -73,6 +73,20 @@ package irig_b_pack is
 
 	type slv_array_type is array (integer range <>) of std_logic_vector;
 
+	type data_to_oled_rec is record
+		sec_1_data_ascii   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		sec_10_data_ascii  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		min_1_data_ascii   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		min_10_data_ascii  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		hour_1_data_ascii  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		hour_10_data_ascii : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		day_1_data_ascii   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		day_10_data_ascii  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		day_100_data_ascii : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		year_1_data_ascii  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+		year_10_data_ascii : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	end record data_to_oled_rec;
+
 end package irig_b_pack;
 
 package body irig_b_pack is

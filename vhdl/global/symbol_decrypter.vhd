@@ -6,7 +6,7 @@ use work.irig_b_pack.all;
 entity symbol_decrypter is
 
 	port(
-		CLK                 : in  std_logic; --  clk
+		CLK                 : in  std_logic; 
 		RESET               : in  std_logic;
 		DATA_IN             : in  std_logic;
 		DATA_OUT_ZERO_PULSE : out std_logic;

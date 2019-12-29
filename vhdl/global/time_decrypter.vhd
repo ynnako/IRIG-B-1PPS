@@ -14,17 +14,7 @@ entity time_decrypter is
 		DATA_IN_REF_PULSE  : in  std_logic;
 		TIME_SYNCED        : in  std_logic;
 		PPS                : in  std_logic;
-		SEC_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		SEC_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		MIN_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		MIN_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		HOUR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		HOUR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAY_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAy_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAY_100_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		YEAR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		YEAR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0)
+		DATA_OUT_TO_OLED   : out data_to_oled_rec
 	);
 end entity time_decrypter;
 
@@ -62,17 +52,17 @@ begin
 	data_in_ref_pulse_sig  <= DATA_IN_REF_PULSE;
 	time_synced_sig        <= TIME_SYNCED;
 	pps_sig                <= PPS;
-	SEC_1_DATA_ASCII       <= sec_1_data_ascii_sig;
-	SEC_10_DATA_ASCII      <= sec_10_data_ascii_sig;
-	MIN_1_DATA_ASCII       <= min_1_data_ascii_sig;
-	MIN_10_DATA_ASCII      <= min_10_data_ascii_sig;
-	HOUR_1_DATA_ASCII      <= hour_1_data_ascii_sig;
-	HOUR_10_DATA_ASCII     <= hour_10_data_ascii_sig;
-	DAY_1_DATA_ASCII       <= day_1_data_ascii_sig;
-	DAy_10_DATA_ASCII      <= day_10_data_ascii_sig;
-	DAY_100_DATA_ASCII     <= day_100_data_ascii_sig;
-	YEAR_1_DATA_ASCII      <= year_1_data_ascii_sig;
-	YEAR_10_DATA_ASCII     <= year_10_data_ascii_sig;
+	DATA_OUT_TO_OLED.sec_1_data_ascii       <= sec_1_data_ascii_sig;
+	DATA_OUT_TO_OLED.sec_10_data_ascii      <= sec_10_data_ascii_sig;
+	DATA_OUT_TO_OLED.min_1_data_ascii       <= min_1_data_ascii_sig;
+	DATA_OUT_TO_OLED.min_10_data_ascii      <= min_10_data_ascii_sig;
+	DATA_OUT_TO_OLED.hour_1_data_ascii      <= hour_1_data_ascii_sig;
+	DATA_OUT_TO_OLED.hour_10_data_ascii     <= hour_10_data_ascii_sig;
+	DATA_OUT_TO_OLED.day_1_data_ascii       <= day_1_data_ascii_sig;
+	DATA_OUT_TO_OLED.day_10_data_ascii      <= day_10_data_ascii_sig;
+	DATA_OUT_TO_OLED.day_100_data_ascii     <= day_100_data_ascii_sig;
+	DATA_OUT_TO_OLED.year_1_data_ascii      <= year_1_data_ascii_sig;
+	DATA_OUT_TO_OLED.year_10_data_ascii     <= year_10_data_ascii_sig;
 	
 	
 	

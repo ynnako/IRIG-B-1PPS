@@ -10,17 +10,8 @@ entity irig_b_top is
 		RESET              : in  std_logic;
 		IRIG_B_DATA_IN     : in  std_logic;
 		PPS				   : out std_logic;
-		SEC_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		SEC_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		MIN_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		MIN_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		HOUR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		HOUR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAY_1_DATA_ASCII   : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAy_10_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		DAY_100_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		YEAR_1_DATA_ASCII  : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		YEAR_10_DATA_ASCII : out std_logic_vector(c_ascii_conv_data_width - 1 downto 0)
+		DATA_OUT_TO_OLED   : out data_to_oled_rec
+
 	);
 end entity irig_b_top;
 
@@ -77,17 +68,7 @@ begin
 			DATA_IN_REF_PULSE  => ref_pulse_sig,
 			TIME_SYNCED        => time_synced_sig,
 			PPS                => pps_sig,
-			SEC_1_DATA_ASCII   => SEC_1_DATA_ASCII,
-			SEC_10_DATA_ASCII  => SEC_10_DATA_ASCII,
-			MIN_1_DATA_ASCII   => MIN_1_DATA_ASCII,
-			MIN_10_DATA_ASCII  => MIN_10_DATA_ASCII,
-			HOUR_1_DATA_ASCII  => HOUR_1_DATA_ASCII,
-			HOUR_10_DATA_ASCII => HOUR_10_DATA_ASCII,
-			DAY_1_DATA_ASCII   => DAY_1_DATA_ASCII,
-			DAy_10_DATA_ASCII  => DAy_10_DATA_ASCII,
-			DAY_100_DATA_ASCII => DAY_100_DATA_ASCII,
-			YEAR_1_DATA_ASCII  => YEAR_1_DATA_ASCII,
-			YEAR_10_DATA_ASCII => YEAR_10_DATA_ASCII
+			DATA_OUT_TO_OLED   => DATA_OUT_TO_OLED 
 		);
 
 end architecture RTL;

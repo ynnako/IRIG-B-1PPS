@@ -21,6 +21,7 @@ architecture RTL of irig_b_1pps_tb is
 	signal s_zero_pulse : std_logic;
 	signal s_one_pulse : std_logic;
 	signal s_ref_pulse : std_logic;
+	signal data_out_to_oled_sig   :  data_to_oled_rec;
 	signal sec_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal sec_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal min_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
@@ -77,17 +78,7 @@ begin
 			RESET              => s_rst,
 			IRIG_B_DATA_IN     => s_irig_data_in,
 			PPS                => s_one_pps,
-			SEC_1_DATA_ASCII   => sec_1_data_ascii_sig,
-			SEC_10_DATA_ASCII  => sec_10_data_ascii_sig,
-			MIN_1_DATA_ASCII   => min_1_data_ascii_sig,
-			MIN_10_DATA_ASCII  => min_10_data_ascii_sig,
-			HOUR_1_DATA_ASCII  => hour_1_data_ascii_sig,
-			HOUR_10_DATA_ASCII => hour_10_data_ascii_sig,
-			DAY_1_DATA_ASCII   => day_1_data_ascii_sig,
-			DAy_10_DATA_ASCII  => day_10_data_ascii_sig,
-			DAY_100_DATA_ASCII => day_100_data_ascii_sig,
-			YEAR_1_DATA_ASCII  => year_1_data_ascii_sig,
-			YEAR_10_DATA_ASCII => year_10_data_ascii_sig
+			DATA_OUT_TO_OLED =>  data_out_to_oled_sig   
 		);	
 		
 
