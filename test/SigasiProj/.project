@@ -57,14 +57,14 @@
 			<locationURI>sigasiresource:/vhdl/2008/STD</locationURI>
 		</link>
 		<link>
+			<name>Global/ascii_converter.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/ascii_converter.vhd</locationURI>
+		</link>
+		<link>
 			<name>Global/irig_b_top.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/global/irig_b_top.vhd</locationURI>
-		</link>
-		<link>
-			<name>Global/time_decrypter.vhd</name>
-			<type>1</type>
-			<locationURI>DESIGN_LOC/global/time_decrypter.vhd</locationURI>
 		</link>
 		<link>
 			<name>Global/pps_gen.vhd</name>
@@ -72,19 +72,19 @@
 			<locationURI>DESIGN_LOC/global/pps_gen.vhd</locationURI>
 		</link>
 		<link>
+			<name>Global/symbol_decoder.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/symbol_decoder.vhd</locationURI>
+		</link>
+		<link>
 			<name>Global/sync.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/global/sync.vhd</locationURI>
 		</link>
 		<link>
-			<name>Global/symbol_decrypter.vhd</name>
+			<name>Global/time_decoder.vhd</name>
 			<type>1</type>
-			<locationURI>DESIGN_LOC/global/symbol_decrypter.vhd</locationURI>
-		</link>
-		<link>
-			<name>Global/ascii_converter.vhd</name>
-			<type>1</type>
-			<locationURI>DESIGN_LOC/global/ascii_converter.vhd</locationURI>
+			<locationURI>DESIGN_LOC/global/time_decoder.vhd</locationURI>
 		</link>
 		<link>
 			<name>Packs/irig_b_1pps_tb_pack.vhd</name>
@@ -96,7 +96,6 @@
 			<type>1</type>
 			<locationURI>DESIGN_LOC/pack/irig_b_pack.vhd</locationURI>
 		</link>
-
 		<link>
 			<name>TB/irig_b_1pps_tb.vhd</name>
 			<type>1</type>
@@ -106,6 +105,11 @@
 			<name>TB/msg_reader.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/test_bench/msg_reader.vhd</locationURI>
+		</link>
+		<link>
+			<name>TB/time_sniffer.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/test_bench/time_sniffer.vhd</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

@@ -7,7 +7,7 @@ use ieee.std_logic_textio.all;
 use work.irig_b_1pps_tb_pack.all;
 use work.irig_b_pack.all;
 
-entity file_writer is
+entity time_sniffer is
 	port(
 		CLK          : in std_logic;
 		RST          : in std_logic;
@@ -20,9 +20,9 @@ entity file_writer is
 		PPS          : in std_logic
 		
 	);
-end entity file_writer;
+end entity time_sniffer;
 
-architecture RTL of file_writer is
+architecture RTL of time_sniffer is
 begin
 
 	write_proc : process(CLK, RST)

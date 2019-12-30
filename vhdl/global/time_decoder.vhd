@@ -118,7 +118,7 @@ begin
 	end process;
 
 -- synthesis translate_off
-	u_reference_file_writer : entity work.file_writer
+	u_reference_file_writer : entity work.time_sniffer
 		port map(
 			CLK          => CLK,
 			RST          => RESET,
