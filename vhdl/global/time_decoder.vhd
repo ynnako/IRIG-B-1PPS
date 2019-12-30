@@ -5,7 +5,7 @@ use ieee.std_logic_arith.all;
 
 use work.irig_b_pack.all;
 
-entity time_decrypter is
+entity time_decoder is
 	port(
 		CLK                : in  std_logic;
 		RESET              : in  std_logic;
@@ -16,9 +16,9 @@ entity time_decrypter is
 		PPS                : in  std_logic;
 		DATA_OUT_TO_OLED   : out data_to_oled_rec
 	);
-end entity time_decrypter;
+end entity time_decoder;
 
-architecture RTL of time_decrypter is
+architecture RTL of time_decoder is
 	--------------
 	-- Signals
 	--------------

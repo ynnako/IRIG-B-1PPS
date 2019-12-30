@@ -39,7 +39,7 @@ begin
 			DATA_OUT => irig_b_synced_data_sig
 		);
 
-	u_symbol_descrypter : entity work.symbol_decrypter
+	u_symbol_descrypter : entity work.symbol_decoder
 		port map(
 			CLK                 => MODULE_CLK,
 			RESET               => RESET,
@@ -59,7 +59,7 @@ begin
 			PPS         => pps_sig
 		);
 
-	u_time_decryptor : entity work.time_decrypter
+	u_time_decryptor : entity work.time_decoder
 		port map(
 			CLK                => MODULE_CLK,
 			RESET              => RESET,
