@@ -40,6 +40,7 @@ architecture RTL of irig_b_1pps_tb is
 	signal min_10_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal hour_1_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal hour_10_data_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+
 begin
 
 	s_rst <= '0' after 110 ns;
@@ -101,11 +102,10 @@ begin
 
 	u_irig_b_top : entity work.irig_b_top
 		port map(
-			MODULE_CLK       => s_1pps_clk,
-			RESET            => s_rst,
-			IRIG_B_DATA_IN   => s_irig_data_in,
-			PPS              => s_one_pps,
-			DATA_OUT_TO_OLED => data_out_to_oled_sig
+			MODULE_CLK         => s_1pps_clk,
+			RESET              => s_rst,
+			IRIG_B_DATA_IN     => s_irig_data_in,
+			PPS                => s_one_pps
 		);	
 		
 	
