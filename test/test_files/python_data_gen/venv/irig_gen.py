@@ -78,7 +78,7 @@ for k in range(0, tot_num_of_msg):
             elif (frames[i][j] == "0"):
                 msg = msg + low
         msg = msg + "\n"
-    time_str = t.strftime("%d.%m.%Y\t%H:%M:%S")
+    time_str = t.strftime("%H:%M:%S")
     f = open(dst_file , "a+")
     f.write(msg)
     f.close()
