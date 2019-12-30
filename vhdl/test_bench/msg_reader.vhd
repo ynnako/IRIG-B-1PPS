@@ -45,14 +45,17 @@ begin
 					v_file_closed := true;
 				end if;
 			end if;
-			while (not (v_file_closed) and not(endfile(irig_file) or v_status)) loop
+			while (not (v_file_closed) and not (endfile(irig_file) or v_status)) loop
 				read(v_line, v_data, v_status);
 			end loop;
 			if (v_status) then
 				DATA <= v_data;
 			end if;
 			v_status := false;
-
+			if (endfile(irig_file)) then
+				file_close(irig_file);
+				v_file_closed := true;
+			end if;
 		end if;
 	end process;
 
