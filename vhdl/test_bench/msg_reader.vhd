@@ -52,7 +52,7 @@ begin
 				DATA <= v_data;
 			end if;
 			v_status := false;
-			if (endfile(irig_file)) then
+			if (endfile(irig_file) and not v_file_closed) then
 				file_close(irig_file);
 				v_file_closed := true;
 			end if;

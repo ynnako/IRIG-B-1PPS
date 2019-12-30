@@ -17,7 +17,7 @@ entity file_writer is
 		MINUTES_TENS : in std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 		HOURS_ONES   : in std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 		HOURS_TENS   : in std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-		PPS          : in std_logic;
+		PPS          : in std_logic
 		
 	);
 end entity file_writer;

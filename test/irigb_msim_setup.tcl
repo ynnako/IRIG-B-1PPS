@@ -41,12 +41,13 @@ vmap       work     ./libraries/work/
 # Compile the design files in correct order
 alias com {
 		vcom -2008 -work work $SIM_DIR/vhdl/test_bench/irig_b_1pps_tb_pack.vhd																																						
-		vcom -2008 -work work $SIM_DIR/vhdl/pack/irig_b_pack.vhd																																						
-		vcom -2008 -work work $SIM_DIR/vhdl/test_bench/msg_reader.vhd																																						
+vcom -2008 -work work $SIM_DIR/vhdl/pack/irig_b_pack.vhd																																						
+    vcom -2008 -work work $SIM_DIR/vhdl/test_bench/msg_reader.vhd										vcom -2008 -work work $SIM_DIR/vhdl/test_bench/file_writer.vhd																											
 		vcom -2008 -work work $SIM_DIR/vhdl/global/pps_gen.vhd
+		vcom -2008 -work work $SIM_DIR/vhdl/global/oled_wrapper.vhd
 		vcom -2008 -work work $SIM_DIR/vhdl/global/ascii_converter.vhd		
-		vcom -2008 -work work $SIM_DIR/vhdl/global/symbol_decrypter.vhd																																						
-		vcom -2008 -work work $SIM_DIR/vhdl/global/time_decrypter.vhd																																						
+		vcom -2008 -work work $SIM_DIR/vhdl/global/symbol_decoder.vhd																																						
+		vcom -2008 -work work $SIM_DIR/vhdl/global/time_decoder.vhd																									       											
 		vcom -2008 -work work $SIM_DIR/vhdl/global/sync.vhd																																						
 		vcom -2008 -work work $SIM_DIR/vhdl/global/irig_b_top.vhd																																						
 		vcom -2008 -work work $SIM_DIR/vhdl/test_bench/irig_b_1pps_tb.vhd																																						
