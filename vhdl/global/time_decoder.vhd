@@ -117,6 +117,20 @@ begin
 		end if;
 	end process;
 
+-- synthesis translate_off
+	u_reference_file_writer : entity work.file_writer
+		port map(
+			CLK          => CLK,
+			RST          => RESET,
+			SECONDS_ONES => data_to_convert_reg(c_counted_unit_sec_index),
+			SECONDS_TENS => data_to_convert_reg(c_digit_of_dozens_sec_index),
+			MINUTES_ONES => data_to_convert_reg(c_counted_unit_min_index),
+			MINUTES_TENS => data_to_convert_reg(c_digit_of_dozens_min_index),
+			HOURS_ONES   => data_to_convert_reg(c_counted_unit_hour_index),
+			HOURS_TENS   => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			PPS          => PPS
+		);
+-- synthesis translate_on
 	-----------------------------------------------------------------------------
 	--------------------------------Seconds--------------------------------------
 	-----------------------------------------------------------------------------

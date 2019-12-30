@@ -80,25 +80,6 @@ begin
 			DATA => s_irig_data_in
 		);
 
-	sec_1_data_sig   <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_counted_unit_of_sec.DATA_IN  : std_logic_vector >>;
-	sec_10_data_sig  <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_digit_of_dozens_sec.DATA_IN  : std_logic_vector >>;
-	min_1_data_sig   <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_counted_unit_of_min.DATA_IN  : std_logic_vector >>;
-	min_10_data_sig  <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_digit_of_dozens_min.DATA_IN  : std_logic_vector >>;
-	hour_1_data_sig  <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_counted_unit_of_hour.DATA_IN  : std_logic_vector >>;
-	hour_10_data_sig <= <<signal .irig_b_1pps_tb.u_irig_b_top.u_time_decryptor.u_convert_digit_of_dozens_hour.DATA_IN  : std_logic_vector >>;
-
-	u_file_writer : entity work.file_writer
-		port map(
-			CLK          => s_1pps_clk,
-			RST          => s_rst,
-			SECONDS_ONES => sec_1_data_sig,
-			SECONDS_TENS => sec_10_data_sig,
-			MINUTES_ONES => min_1_data_sig,
-			MINUTES_TENS => min_1_data_sig,
-			HOURS_ONES   => hour_1_data_sig,
-			HOURS_TENS   => hour_10_data_sig,
-			PPS          => s_one_pps
-		);
 
 	u_irig_b_top : entity work.irig_b_top
 		port map(
