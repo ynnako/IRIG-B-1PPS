@@ -9,8 +9,8 @@ entity irig_b_top is
 		MODULE_CLK         : in  std_logic;
 		RESET              : in  std_logic;
 		IRIG_B_DATA_IN     : in  std_logic;
-		PPS				   : out std_logic;
-		DATA_OUT_TO_OLED   : out data_to_oled_rec
+		PPS				   : out std_logic
+	
 
 	);
 end entity irig_b_top;
@@ -24,6 +24,7 @@ architecture RTL of irig_b_top is
 	signal ref_pulse_sig          : std_logic;
 	signal pps_sig                : std_logic;
 	signal time_synced_sig        : std_logic;
+	signal data_out_to_oled_sig       :data_to_oled_rec;
 
 
 begin
@@ -68,7 +69,14 @@ begin
 			DATA_IN_REF_PULSE  => ref_pulse_sig,
 			TIME_SYNCED        => time_synced_sig,
 			PPS                => pps_sig,
-			DATA_OUT_TO_OLED   => DATA_OUT_TO_OLED 
+			DATA_OUT_TO_OLED   => data_out_to_oled_sig 
 		);
+		
+	u_oled_wrapper : entity work.oled_wrapper
+		port map(
+			CLK              => MODULE_CLK,
+			RST              => RESET,
+			DATA_IN_TO_OLED => data_out_to_oled_sig
+		);	
 
 end architecture RTL;
