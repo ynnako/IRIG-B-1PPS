@@ -54,7 +54,7 @@ begin
 					if (REF_FLAG = '1') then
 						if (s_first_ref) then
 							s_first_ref <= false;
-						elsif (s_ref_to_ref_counter > c_2_ms - c_2_ms_error and s_ref_to_ref_counter < c_2_ms + c_2_ms_error) then
+						elsif (s_ref_to_ref_counter > c_ten_ms - c_ten_ms_error and s_ref_to_ref_counter < c_ten_ms + c_ten_ms_error) then
 							s_pps_gen_state <= pps_gen_st;
 							s_ref_counter   <= 0;
 							s_time_synced   <= '1';
