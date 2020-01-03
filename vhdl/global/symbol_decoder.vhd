@@ -3,17 +3,18 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 use work.irig_b_pack.all;
-entity symbol_decoder is
 
+entity symbol_decoder is
 	port(
 		CLK                 : in  std_logic;
 		RESET               : in  std_logic;
-		DATA_IN             : in  std_logic;
+		IRIG_B_SYNCED_DATA  : in  std_logic;
 		DATA_OUT_ZERO_PULSE : out std_logic;
 		DATA_OUT_ONE_PULSE  : out std_logic;
 		DATA_OUT_REF_PULSE  : out std_logic
 	);
 end entity symbol_decoder;
+
 
 architecture RTL of symbol_decoder is
 
@@ -29,7 +30,7 @@ architecture RTL of symbol_decoder is
 	signal data_in_reg             : std_logic;
 
 begin
-	data_in_sig         <= DATA_IN;
+	data_in_sig         <= IRIG_B_SYNCED_DATA;
 	DATA_OUT_ZERO_PULSE <= data_out_zero_pulse_reg;
 	DATA_OUT_ONE_PULSE  <= data_out_one_pulse_reg;
 	DATA_OUT_REF_PULSE  <= data_out_ref_pulse_reg;

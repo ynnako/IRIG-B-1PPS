@@ -14,7 +14,7 @@ entity time_decoder is
 		DATA_IN_REF_PULSE  : in  std_logic;
 		TIME_SYNCED        : in  std_logic;
 		PPS                : in  std_logic;
-		DATA_OUT_TO_OLED   : out data_to_oled_rec
+		ASCII_DATA_OUT     : out data_to_oled_rec
 	);
 end entity time_decoder;
 
@@ -47,22 +47,22 @@ architecture RTL of time_decoder is
 
 begin
 
-	data_in_zero_pulse_sig <= DATA_IN_ZERO_PULSE;
-	data_in_one_pulse_sig  <= DATA_IN_ONE_PULSE;
-	data_in_ref_pulse_sig  <= DATA_IN_REF_PULSE;
-	time_synced_sig        <= TIME_SYNCED;
-	pps_sig                <= PPS;
-	DATA_OUT_TO_OLED.sec_1_data_ascii       <= sec_1_data_ascii_sig;
-	DATA_OUT_TO_OLED.sec_10_data_ascii      <= sec_10_data_ascii_sig;
-	DATA_OUT_TO_OLED.min_1_data_ascii       <= min_1_data_ascii_sig;
-	DATA_OUT_TO_OLED.min_10_data_ascii      <= min_10_data_ascii_sig;
-	DATA_OUT_TO_OLED.hour_1_data_ascii      <= hour_1_data_ascii_sig;
-	DATA_OUT_TO_OLED.hour_10_data_ascii     <= hour_10_data_ascii_sig;
-	DATA_OUT_TO_OLED.day_1_data_ascii       <= day_1_data_ascii_sig;
-	DATA_OUT_TO_OLED.day_10_data_ascii      <= day_10_data_ascii_sig;
-	DATA_OUT_TO_OLED.day_100_data_ascii     <= day_100_data_ascii_sig;
-	DATA_OUT_TO_OLED.year_1_data_ascii      <= year_1_data_ascii_sig;
-	DATA_OUT_TO_OLED.year_10_data_ascii     <= year_10_data_ascii_sig;
+	data_in_zero_pulse_sig            <= DATA_IN_ZERO_PULSE;
+	data_in_one_pulse_sig             <= DATA_IN_ONE_PULSE;
+	data_in_ref_pulse_sig             <= DATA_IN_REF_PULSE;
+	time_synced_sig                   <= TIME_SYNCED;
+	pps_sig                           <= PPS;
+	ASCII_DATA_OUT.sec_1_data_ascii   <= sec_1_data_ascii_sig;
+	ASCII_DATA_OUT.sec_10_data_ascii  <= sec_10_data_ascii_sig;
+	ASCII_DATA_OUT.min_1_data_ascii   <= min_1_data_ascii_sig;
+	ASCII_DATA_OUT.min_10_data_ascii  <= min_10_data_ascii_sig;
+	ASCII_DATA_OUT.hour_1_data_ascii  <= hour_1_data_ascii_sig;
+	ASCII_DATA_OUT.hour_10_data_ascii <= hour_10_data_ascii_sig;
+	ASCII_DATA_OUT.day_1_data_ascii   <= day_1_data_ascii_sig;
+	ASCII_DATA_OUT.day_10_data_ascii  <= day_10_data_ascii_sig;
+	ASCII_DATA_OUT.day_100_data_ascii <= day_100_data_ascii_sig;
+	ASCII_DATA_OUT.year_1_data_ascii  <= year_1_data_ascii_sig;
+	ASCII_DATA_OUT.year_10_data_ascii <= year_10_data_ascii_sig;
 	
 	
 	
@@ -88,7 +88,7 @@ begin
 				end if;
 				if (counter_ref_pulse_sig = c_num_refs_in_time_frame) then
 					counter_ref_pulse_sig  <= -1;
-					counter_data_pulse_sig <= -1; 
+					counter_data_pulse_sig <= -1;
 				end if;
 
 				if (pps_sig = '1') then
@@ -122,42 +122,42 @@ begin
 	-----------------------------------------------------------------------------
 	u_convert_counted_unit_of_sec : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_sec_index),
-			ASCII_VALUE_OUT => sec_1_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_unit_sec_index),
+			ASCII_VALUE_OUT  => sec_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_sec : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_sec_index),
-			ASCII_VALUE_OUT => sec_10_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_digit_of_dozens_sec_index),
+			ASCII_VALUE_OUT  => sec_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
 	--------------------------------Minutes--------------------------------------
 	-----------------------------------------------------------------------------		
 	u_convert_counted_unit_of_min : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_min_index),
-			ASCII_VALUE_OUT => min_1_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_unit_min_index),
+			ASCII_VALUE_OUT  => min_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_min : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_min_index),
-			ASCII_VALUE_OUT => min_10_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_digit_of_dozens_min_index),
+			ASCII_VALUE_OUT  => min_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
 	----------------------------------Hours--------------------------------------
 	-----------------------------------------------------------------------------		
 	u_convert_counted_unit_of_hour : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_hour_index),
-			ASCII_VALUE_OUT => hour_1_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_unit_hour_index),
+			ASCII_VALUE_OUT  => hour_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_hour : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_hour_index),
-			ASCII_VALUE_OUT => hour_10_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			ASCII_VALUE_OUT  => hour_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
 	-----------------------------------Days--------------------------------------
@@ -165,20 +165,20 @@ begin
 
 	u_convert_counted_unit_of_day : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_day_index),
-			ASCII_VALUE_OUT => day_1_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_unit_day_index),
+			ASCII_VALUE_OUT  => day_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_day : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_day_index),
-			ASCII_VALUE_OUT => day_10_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_digit_of_dozens_day_index),
+			ASCII_VALUE_OUT  => day_10_data_ascii_sig
 		);
 
 	u_convert_counted_hundrens_of_day : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_hundreds_day_index),
-			ASCII_VALUE_OUT => day_100_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_hundreds_day_index),
+			ASCII_VALUE_OUT  => day_100_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
 	------------------------------------Years------------------------------------
@@ -186,14 +186,14 @@ begin
 
 	u_convert_counted_unit_of_year : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_year_index),
-			ASCII_VALUE_OUT => year_1_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_counted_unit_year_index),
+			ASCII_VALUE_OUT  => year_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_year : entity work.ascii_converter
 		port map(
-			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_year_index),
-			ASCII_VALUE_OUT => year_10_data_ascii_sig
+			NUMERIC_VALUE_IN => data_to_convert_reg(c_digit_of_dozens_year_index),
+			ASCII_VALUE_OUT  => year_10_data_ascii_sig
 		);
 
 end architecture RTL;

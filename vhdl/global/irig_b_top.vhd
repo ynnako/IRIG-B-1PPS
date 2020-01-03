@@ -42,7 +42,7 @@ begin
 		port map(
 			CLK                 => MODULE_CLK,
 			RESET               => RESET,
-			DATA_IN             => irig_b_synced_data_sig,
+			IRIG_B_SYNCED_DATA             => irig_b_synced_data_sig,
 			DATA_OUT_ZERO_PULSE => zero_pulse_sig,
 			DATA_OUT_ONE_PULSE  => one_pulse_sig,
 			DATA_OUT_REF_PULSE  => ref_pulse_sig
@@ -67,7 +67,7 @@ begin
 			DATA_IN_REF_PULSE  => ref_pulse_sig,
 			TIME_SYNCED        => time_synced_sig,
 			PPS                => pps_sig,
-			DATA_OUT_TO_OLED   => data_out_to_oled_sig
+			ASCII_DATA_OUT   => data_out_to_oled_sig
 		);
 
 	u_oled_wrapper : entity work.oled_wrapper

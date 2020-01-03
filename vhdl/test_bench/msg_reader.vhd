@@ -7,8 +7,8 @@ use work.irig_b_1pps_tb_pack.all;
 
 entity msg_reader is
 	port(
-		CLK  : in  std_logic;
-		RST  : in  std_logic;
+		CLK         : in  std_logic;
+		RST         : in  std_logic;
 		IRIG_B_DATA : out std_logic
 	);
 end entity msg_reader;
@@ -25,12 +25,12 @@ begin
 		variable v_file_closed : boolean   := true;
 	begin
 		if (RST = c_init) then
-			IRIG_B_DATA      <= '0';
+			IRIG_B_DATA <= '0';
 			if (v_file_closed) then
 				file_open(irig_file, "./test_files/in_files/irig_msg.txt", read_mode);
 				v_file_closed := false;
 			end if;
-			s_counter <= c_num_of_bits_in_frame - 1;
+			s_counter   <= c_num_of_bits_in_frame - 1;
 		elsif (rising_edge(CLK)) then
 			s_counter <= s_counter - 1;
 			if (s_counter = 0) then
