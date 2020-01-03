@@ -1,3 +1,6 @@
+library modelsim_lib;
+use modelsim_lib.util.all;
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -40,8 +43,28 @@ architecture RTL of irig_b_1pps_tb is
 	signal min_10_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal hour_1_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
 	signal hour_10_data_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	
+	signal data_to_convert_reg    : slv_array_type(0 to c_num_of_digit_to_disp - 1)(c_ascii_conv_data_width - 1 downto 0) := (others => (others => '0'));
 
 begin
+
+init_signal_spy("/irig_b_1pps_tb/u_irig_b_top/u_time_decoder/data_to_convert_reg","/data_to_convert_reg",1);
+
+
+
+	u_reference_file_writer : entity work.time_sniffer
+		port map(
+			CLK          => s_1pps_clk,
+			RST          => s_rst,
+			SECONDS_ONES => data_to_convert_reg(c_counted_unit_sec_index),
+			SECONDS_TENS => data_to_convert_reg(c_digit_of_dozens_sec_index),
+			MINUTES_ONES => data_to_convert_reg(c_counted_unit_min_index),
+			MINUTES_TENS => data_to_convert_reg(c_digit_of_dozens_min_index),
+			HOURS_ONES   => data_to_convert_reg(c_counted_unit_hour_index),
+			HOURS_TENS   => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			PPS          => s_one_pps
+		);
+
 
 	s_rst <= '0' after 110 ns;
 
