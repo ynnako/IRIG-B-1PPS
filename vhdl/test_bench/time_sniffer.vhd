@@ -4,7 +4,6 @@ use ieee.std_logic_unsigned.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
-use work.irig_b_1pps_tb_pack.all;
 use work.irig_b_pack.all;
 
 entity time_sniffer is

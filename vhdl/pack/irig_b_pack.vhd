@@ -18,8 +18,8 @@ package irig_b_pack is
 	constant c_num_of_symbols_in_frame : integer                      := 10;
 	constant c_half_frame_size         : integer                      := c_whole_symbol_width * c_num_of_symbols_in_frame * c_clk_rate / 2;
 	constant c_frame_error             : integer                      := 2 * c_half_frame_size / c_precentage;
-	constant c_2_ms                    : integer                      := 2 * c_clk_rate;
-	constant c_2_ms_error              : integer                      := c_2_ms / c_precentage;
+	constant c_ten_ms                  : integer                      := 10 * c_clk_rate;
+	constant c_ten_ms_error            : integer                      := c_ten_ms / c_precentage;
 	constant c_num_refs_in_time_frame  : integer                      := 10;
 	constant c_num_data_symbol_per_sec : integer                      := c_num_of_symbols_in_frame * c_num_refs_in_time_frame;
 	--
