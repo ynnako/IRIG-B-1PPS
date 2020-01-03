@@ -1,9 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
+
 use work.irig_b_1pps_tb_pack.all;
 use work.irig_b_pack.all;
 
@@ -32,14 +32,14 @@ begin
 		if (RST = c_init) then
 		elsif (rising_edge(CLK)) then
 			if (PPS = '1') then
-				write(v_line, conv_integer(unsigned(HOURS_TENS)));
-				write(v_line, conv_integer(unsigned(HOURS_ONES)));
+				write(v_line, conv_integer(HOURS_TENS));
+				write(v_line, conv_integer(HOURS_ONES));
 				swrite(v_line, ":");
-				write(v_line, conv_integer(unsigned(MINUTES_TENS)));
-				write(v_line, conv_integer(unsigned(MINUTES_ONES)));
+				write(v_line, conv_integer(MINUTES_TENS));
+				write(v_line, conv_integer(MINUTES_ONES));
 				swrite(v_line, ":");
-				write(v_line, conv_integer(unsigned(SECONDS_TENS)));
-				write(v_line, conv_integer(unsigned(SECONDS_ONES)));
+				write(v_line, conv_integer(SECONDS_TENS));
+				write(v_line, conv_integer(SECONDS_ONES));
 				writeline(out_file, v_line);
 			end if;
 		end if;
