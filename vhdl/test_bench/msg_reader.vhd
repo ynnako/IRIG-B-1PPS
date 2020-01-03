@@ -9,7 +9,7 @@ entity msg_reader is
 	port(
 		CLK  : in  std_logic;
 		RST  : in  std_logic;
-		DATA : out std_logic
+		IRIG_B_DATA : out std_logic
 	);
 end entity msg_reader;
 
@@ -25,7 +25,7 @@ begin
 		variable v_file_closed : boolean   := true;
 	begin
 		if (RST = c_init) then
-			DATA      <= '0';
+			IRIG_B_DATA      <= '0';
 			if (v_file_closed) then
 				file_open(irig_file, "./test_files/in_files/irig_msg.txt", read_mode);
 				v_file_closed := false;
@@ -49,7 +49,7 @@ begin
 				read(v_line, v_data, v_status);
 			end loop;
 			if (v_status) then
-				DATA <= v_data;
+				IRIG_B_DATA <= v_data;
 			end if;
 			v_status := false;
 		end if;

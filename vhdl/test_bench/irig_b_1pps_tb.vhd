@@ -12,43 +12,17 @@ entity irig_b_1pps_tb is
 end entity irig_b_1pps_tb;
 
 architecture RTL of irig_b_1pps_tb is
-	signal s_1pps_clk             : std_logic := '1';
-	signal s_irig_clk             : std_logic := '1';
-	signal s_rst                  : std_logic := '1';
-	signal s_irig_data_in         : std_logic;
-	signal s_one_pps              : std_logic;
-	signal s_data_in              : std_logic;
-	signal s_time_start           : integer;
-	signal s_ref_falg             : std_logic;
-	signal s_time_synced          : std_logic;
-	signal s_zero_pulse           : std_logic;
-	signal s_one_pulse            : std_logic;
-	signal s_ref_pulse            : std_logic;
-	signal data_out_to_oled_sig   : data_to_oled_rec;
-	signal sec_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal sec_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal min_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal min_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal hour_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal hour_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal day_1_data_ascii_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal day_10_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal day_100_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal year_1_data_ascii_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal year_10_data_ascii_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
+	signal s_1pps_clk     : std_logic := '1';
+	signal s_irig_clk     : std_logic := '1';
+	signal s_rst          : std_logic := '1';
+	signal s_irig_data_in : std_logic;
+	signal s_one_pps      : std_logic;
 
-	signal sec_1_data_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal sec_10_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal min_1_data_sig   : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal min_10_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal hour_1_data_sig  : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	signal hour_10_data_sig : std_logic_vector(c_ascii_conv_data_width - 1 downto 0);
-	
-	signal data_to_convert_reg    : slv_array_type(0 to c_num_of_digit_to_disp - 1)(c_ascii_conv_data_width - 1 downto 0) := (others => (others => '0'));
+	signal decoded_data : slv_array_type(0 to c_num_of_digit_to_disp - 1)(c_ascii_conv_data_width - 1 downto 0) := (others => (others => '0'));
 
 begin
 
-init_signal_spy("/irig_b_1pps_tb/u_irig_b_top/u_time_decoder/data_to_convert_reg","/data_to_convert_reg",1);
+	init_signal_spy("/irig_b_1pps_tb/u_irig_b_top/u_time_decoder/data_to_convert_reg", "/decoded_data", 1);
 
 
 
@@ -56,12 +30,12 @@ init_signal_spy("/irig_b_1pps_tb/u_irig_b_top/u_time_decoder/data_to_convert_reg
 		port map(
 			CLK          => s_1pps_clk,
 			RST          => s_rst,
-			SECONDS_ONES => data_to_convert_reg(c_counted_unit_sec_index),
-			SECONDS_TENS => data_to_convert_reg(c_digit_of_dozens_sec_index),
-			MINUTES_ONES => data_to_convert_reg(c_counted_unit_min_index),
-			MINUTES_TENS => data_to_convert_reg(c_digit_of_dozens_min_index),
-			HOURS_ONES   => data_to_convert_reg(c_counted_unit_hour_index),
-			HOURS_TENS   => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			SECONDS_ONES => decoded_data(c_counted_unit_sec_index),
+			SECONDS_TENS => decoded_data(c_digit_of_dozens_sec_index),
+			MINUTES_ONES => decoded_data(c_counted_unit_min_index),
+			MINUTES_TENS => decoded_data(c_digit_of_dozens_min_index),
+			HOURS_ONES   => decoded_data(c_counted_unit_hour_index),
+			HOURS_TENS   => decoded_data(c_digit_of_dozens_hour_index),
 			PPS          => s_one_pps
 		);
 
@@ -100,16 +74,16 @@ init_signal_spy("/irig_b_1pps_tb/u_irig_b_top/u_time_decoder/data_to_convert_reg
 		port map(
 			CLK  => s_irig_clk,
 			RST  => s_rst,
-			DATA => s_irig_data_in
+			IRIG_B_DATA => s_irig_data_in
 		);
 
 
 	u_irig_b_top : entity work.irig_b_top
 		port map(
-			MODULE_CLK         => s_1pps_clk,
-			RESET              => s_rst,
-			IRIG_B_DATA_IN     => s_irig_data_in,
-			PPS                => s_one_pps
+			MODULE_CLK     => s_1pps_clk,
+			RESET          => s_rst,
+			IRIG_B_DATA_IN => s_irig_data_in,
+			PPS            => s_one_pps
 		);	
 		
 	

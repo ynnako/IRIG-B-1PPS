@@ -57,6 +57,11 @@
 			<locationURI>sigasiresource:/vhdl/2008/STD</locationURI>
 		</link>
 		<link>
+			<name>Global/oled_wrapper.vhd</name>
+			<type>1</type>
+			<locationURI>DESIGN_LOC/global/oled_wrapper.vhd</locationURI>
+		</link>
+		<link>
 			<name>Global/ascii_converter.vhd</name>
 			<type>1</type>
 			<locationURI>DESIGN_LOC/global/ascii_converter.vhd</locationURI>
