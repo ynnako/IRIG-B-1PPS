@@ -136,13 +136,13 @@ begin
 	-----------------------------------------------------------------------------
 	u_convert_counted_unit_of_sec : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_unit_sec_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_sec_index),
 			ASCII_VALUE_OUT => sec_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_sec : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_sec_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_sec_index),
 			ASCII_VALUE_OUT => sec_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
@@ -150,13 +150,13 @@ begin
 	-----------------------------------------------------------------------------		
 	u_convert_counted_unit_of_min : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_unit_min_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_min_index),
 			ASCII_VALUE_OUT => min_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_min : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_min_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_min_index),
 			ASCII_VALUE_OUT => min_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
@@ -164,13 +164,13 @@ begin
 	-----------------------------------------------------------------------------		
 	u_convert_counted_unit_of_hour : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_unit_hour_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_hour_index),
 			ASCII_VALUE_OUT => hour_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_hour : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_hour_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_hour_index),
 			ASCII_VALUE_OUT => hour_10_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
@@ -179,19 +179,19 @@ begin
 
 	u_convert_counted_unit_of_day : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_unit_day_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_day_index),
 			ASCII_VALUE_OUT => day_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_day : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_day_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_day_index),
 			ASCII_VALUE_OUT => day_10_data_ascii_sig
 		);
 
 	u_convert_counted_hundrens_of_day : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_hundreds_day_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_hundreds_day_index),
 			ASCII_VALUE_OUT => day_100_data_ascii_sig
 		);
 	-----------------------------------------------------------------------------
@@ -200,13 +200,13 @@ begin
 
 	u_convert_counted_unit_of_year : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_counted_unit_year_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_counted_unit_year_index),
 			ASCII_VALUE_OUT => year_1_data_ascii_sig
 		);
 
 	u_convert_digit_of_dozens_year : entity work.ascii_converter
 		port map(
-			DATA_IN         => data_to_convert_reg(c_digit_of_dozens_year_index),
+			NUMERIC_VALUE_IN         => data_to_convert_reg(c_digit_of_dozens_year_index),
 			ASCII_VALUE_OUT => year_10_data_ascii_sig
 		);
 
